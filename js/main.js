@@ -1,26 +1,42 @@
-// Select elements
-const firstLi = document.querySelector('li:first-child');
-const link = firstLi.children[0];
+// Define UI Vars
+const form = document.querySelector('#task-form');
+const taskList = document.querySelector('.collection');
+const clearBtn = document.querySelector('.clear-tasks');
+const filter = document.querySelector('#filter');
+const taskInput = document.querySelector('#task');
 
-let val;
+// Load all event listeners
+loadEventListeners();
 
-// Get and check classes
-val = firstLi.className;
-val = link.classList;
-val = link.classList[0];
-val = link.classList.contains('delete-item');
+// Load all event listeners
+function loadEventListeners() {
+	// Add task event
+	form.addEventListener('submit', addTask);
+}
 
-// Add remove classes
-link.classList.add('text');
-val = link;
-link.classList.remove('text');
-val = link;
+// Add task
+function addTask(e){
+	e.preventDefault();
 
-// Atributes
-link.setAttribute('href', 'https://google.com');
-link.setAttribute('title', 'Google');
-link.removeAttribute('title');
-val = link.getAttribute('href');
-val = link.hasAttribute('href');
+	if(taskInput.value === '') {
+		alert('Add a task');
+	}
 
-console.log(val);
+	// Create li element
+	const li = document.createElement('li');
+	li.className = 'collection-item';
+	// Create text node and append to li
+	li.appendChild(document.createTextNode(taskInput.value));
+	// Create new link element
+	const link = document.createElement('a');
+	// Add class
+	link.className = 'delete-item secondary-content';
+	// Add icon HTML
+	link.innerHTML = '<i class="fa fa-remove"></i>';
+	// Append the link to li
+	li.appendChild(link);
+	// Append li to ul
+	taskList.appendChild(li);
+	// Clear input
+	taskInput.value = '';
+}
